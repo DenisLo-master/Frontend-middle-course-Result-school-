@@ -1,34 +1,41 @@
-export function audioControl(event) {
-    const audioAll = document.querySelectorAll("audio");
-    const audioId = "audio" + [event.target.id]
-    const audioCurrent = document.getElementById(audioId);
-    audioAll.forEach((audioItem) => {
-        audioItem !== audioCurrent && audioItem.pause()
-    });
-    if (audioCurrent?.paused) {
-        audioCurrent.play()
-    } else if (!audioCurrent?.paused) {
-        audioCurrent.pause()
+import data from "./data";
+let playingMusicId;
+
+
+export function musicControl(itemID) {
+    const currentButtonWrapper = document.querySelector(`div[data-item-id="${itemID}"]`)?.parentNode
+    const item = data.find((i) => i.id === itemID);
+    if (!item) return;
+
+    volumeControl(currentButtonWrapper)
+
+    const audio = document.querySelector("audio");
+
+    const iconAll = document.querySelectorAll(".toggleIcon");
+    const currentIcon = currentButtonWrapper.querySelector(".toggleIcon");
+
+    iconAll.forEach((iconItem, index) => {
+        iconItem.src = data[index].icon
+    })
+
+    if (!audio?.paused && playingMusicId === item.id) {
+        audio.pause()
+        currentIcon.src = "./assets/icons/pause.svg"
+    } else {
+        audio.src = item.music
+        audio.play()
+        playingMusicId = item.id
     }
-    return audioCurrent?.paused
 }
 
-export function volumeControl(event) {
+function volumeControl(currentButtonWrapper) {
     const volumeAll = document.querySelectorAll(".volume");
+
     volumeAll.forEach((volumeItem) => {
         volumeItem.style.opacity = 0
     });
-    const volumeId = "volume" + [event.target.id]
-    const volumeCurrent = document.getElementById(volumeId);
+
+    const volumeCurrent = currentButtonWrapper.querySelector(".volume");
     volumeCurrent.style.opacity = 1
 }
 
-export function iconControl({ audioState, currentId }) {
-    const iconAll = document.querySelectorAll(".toggleIcon");
-    iconAll.forEach((iconItem) => {
-        iconItem.classList.remove("pauseIcon")
-        if (audioState && iconItem.id === currentId) {
-            iconItem.classList.add("pauseIcon")
-        }
-    })
-}

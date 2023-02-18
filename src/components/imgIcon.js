@@ -1,8 +1,8 @@
 import data from "../data";
 
 export function imgIcon(index) {
-    const icon = document.createElement("div");
-    icon.id = index;
-    icon.classList.add("toggleIcon", data[index].icon)
+    const icon = document.createElement("img");
+    icon.src = data[index].icon
+    icon.classList.add("toggleIcon")
     return icon
 }

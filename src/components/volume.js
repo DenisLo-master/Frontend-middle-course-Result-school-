@@ -1,9 +1,6 @@
-import { audioUI } from "./audio";
 
 export function volumeUI({ index, defaultButtonActive }) {
     const volume = document.createElement("input");
-    volume.className = "volumeMusic"
-    volume.id = "volume" + index
     volume.className = "volume"
     volume.type = "range"
     volume.min = 0
@@ -16,7 +13,5 @@ export function volumeUI({ index, defaultButtonActive }) {
     } else {
         volume.style.opacity = 0
     }
-    const audio = audioUI(index)
-    volume.appendChild(audio)
     return volume
 }
