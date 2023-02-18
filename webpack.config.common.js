@@ -5,7 +5,7 @@ const path = require('path');
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
-    entry: "./index.tsx",
+    entry: "./index.js",
     output: {
         filename: "[name].[contenthash].js",
         path: path.resolve(__dirname, "dist"),
@@ -24,6 +24,14 @@ module.exports = {
                 {
                     from: path.resolve(__dirname, 'public/favicon.ico'),
                     to: path.resolve(__dirname, 'dist')
+                },
+                {
+                    from: path.resolve(__dirname, 'src/assets'),
+                    to: path.resolve(__dirname, 'dist/assets')
+                },
+                {
+                    from: path.resolve(__dirname, 'src/fonts'),
+                    to: path.resolve(__dirname, 'dist/fonts')
                 }
             ]
         })
@@ -56,4 +64,4 @@ module.exports = {
             },
         ],
     },
-}
+};
