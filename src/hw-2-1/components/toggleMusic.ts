@@ -1,4 +1,4 @@
-import { data } from '../data'
+import { data } from '../hw-2-1/data'
 
 export function toggleMusicUI (index: number): HTMLDivElement {
   const toggleMusic = document.createElement('div')
