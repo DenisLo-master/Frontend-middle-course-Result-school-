@@ -1,12 +1,27 @@
 {
     "compilerOptions": {
         "outDir": "./dist/",
+        "rootDir": "./src/hw-2-2",
         "noImplicitAny": true,
-        "module": "es6",
-        "target": "ES2022",
+        "module": "NodeNext",
+        "target": "ES2018",
+        // "lib":["ES6"],
         "allowJs": true,
+        "checkJs": true,
         "strict": true,
+        "sourceMap": true,
+        "removeComments": true,
         "moduleResolution": "node",
+        "resolveJsonModule": true,
         "allowSyntheticDefaultImports":true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+    },
+    "include": ["src/hw-2-2/*"],
+    "exclude": ["node_modules"],
+    "lib": ["esnext"],
+    "ts-node":{
+        "esm":true
     }
 }
