@@ -1,11 +1,11 @@
 {
     "compilerOptions": {
-        "outDir": "./dist/",
+        "outDir": "./build",
         "rootDir": "./src/hw-2-2",
         "noImplicitAny": true,
-        "module": "NodeNext",
+        "module": "ES6",
         "target": "ES2018",
-        // "lib":["ES6"],
+        "lib":["ES6"],
         "allowJs": true,
         "checkJs": true,
         "strict": true,
@@ -18,8 +18,8 @@
         "forceConsistentCasingInFileNames": true,
         "skipLibCheck": true,
     },
-    "include": ["src/hw-2-2/*"],
-    "exclude": ["node_modules"],
+    "include": ["src/hw-2-2/**/*"],
+    "exclude": ["node_modules", "build"],
     "lib": ["esnext"],
     "ts-node":{
         "esm":true
