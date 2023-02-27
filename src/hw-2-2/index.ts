@@ -1,4 +1,5 @@
 import { type Installment, type Product, totalPrice } from './task2.js'
+import { normalizeData, posts } from './task3.js'
 
 console.log('------- task 2 ------')
 const result1 = totalPrice<Product>({ price: 100000, discount: 35 })
@@ -8,3 +9,16 @@ console.log('Total Price2: ', result2.priceAfterDiscount)
 console.log('Number of installment months: ', result2.months)
 console.log('Monthly payment will be: ', result2.payment)
 // 6250
+
+console.log('\n\n------- task 3 ------')
+console.log(normalizeData(posts))
+/**
+* {
+*    byId: {
+*      62e69d5a5458aac0ed320b35: { id: '...', title: '...', body: '...' },
+*      62e69d5a5458aac0ed320b1c: { id: '...', title: '...', body: '...' },
+*      ...
+*    },
+*    allIds: ['62e69d5a5458aac0ed320b35', '62e69d5a5458aac0ed320b1c', ...]
+* }
+*/
