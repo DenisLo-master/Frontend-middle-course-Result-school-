@@ -10,8 +10,8 @@ export function useLocalStorage(curToken = null) {
     }
 
     function setItem(newToken) {
-        const curToken = localStorage.setItem('token', newToken);
-        setToken(curToken)
+        localStorage.setItem('token', newToken);
+        setToken(newToken)
     }
 
     function removeItem() {
