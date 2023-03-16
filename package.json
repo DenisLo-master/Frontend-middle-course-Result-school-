@@ -1,5 +1,5 @@
 {
-  "name": "webpack-course",
+  "name": "frontend-middle-course",
   "version": "1.0.0",
   "description": "",
   "type": "module",
@@ -8,8 +8,9 @@
     "start-webpack": "npx webpack serve --config webpack.config.dev.js",
     "build-webpack": "npx webpack --config webpack.config.prod.js",
     "build-webpack:dev": "npx webpack --config webpack.config.dev.js",
-    "build": "rimraf ./dist && npx tsc",
-    "start": "npm run build && node dist/index.ts"
+    "dev": "npx nodemon",
+    "build": "rimraf ./build && npx tsc",
+    "start": "npm run build && node build/index.js"
   },
   "author": "DenisLo",
   "license": "ISC",
@@ -44,5 +45,8 @@
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.11.1",
     "webpack-merge": "^5.8.0"
+  },
+  "dependencies": {
+    "axios": "^1.3.4"
   }
 }
