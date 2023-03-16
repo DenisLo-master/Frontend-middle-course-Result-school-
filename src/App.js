@@ -1,6 +1,7 @@
 import Task1 from './components/Task1.jsx';
 import Task2 from './components/Task2.jsx';
 import Task3 from './components/Task3.jsx';
+import Task4 from './components/Task4.jsx';
 
 function App() {
 
@@ -42,7 +43,7 @@ function App() {
         </div>
         <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
           <h2>Задание №4</h2>
-          <Task2 />
+          <Task4 />
         </div>
       </div>
     </>

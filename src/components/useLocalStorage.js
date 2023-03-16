@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 
 export function useLocalStorage(curToken = null) {
     const [token, setToken] = useState()
