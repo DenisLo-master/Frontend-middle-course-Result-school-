@@ -1,27 +1,13 @@
-import { useFetch } from './useFetch.js';
+import Task1 from './components/Task1.jsx';
 
 function App() {
-  const {
-    data,
-    isLoading,
-    error,
-    refetch
-  } = useFetch('https://jsonplaceholder.typicode.com/posts');
 
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
       <div>
-        <button onClick={() => refetch({
-          params: {
-            _limit: 3
-          }
-        })}>
-          Перезапросить
-        </button>
+        <h2>Задание №1</h2>
+        <Task1 />
       </div>
-      {isLoading && 'Загрузка...'}
-      {error && 'Произошла ошибка'}
-      {data && !isLoading && data.map(item => <div key={item.id}>{item.title}</div>)}
     </div>
   );
 }
