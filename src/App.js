@@ -1,14 +1,67 @@
+import { useState } from 'react';
 import Task1 from './components/Task1.jsx';
 import Task2 from './components/Task2.jsx';
 import Task3 from './components/Task3.jsx';
 import Task4 from './components/Task4.jsx';
 import Task5 from './components/Task5.jsx';
 import Task6 from './components/Task6.jsx';
+import Popup from './components/UI/Popup.jsx';
+import Signin from './containers/Signin.jsx';
+import Signup from './containers/Signup.jsx';
 
 function App() {
+  const [signinShow, setSigninShow] = useState(false)
+  const [signupShow, setSignupShow] = useState(false)
+
+  function signinHandler(state) {
+    console.log(state)
+  }
+  function signupHandler(state) {
+    console.log(state)
+  }
+
+  const inputStyle = {
+    radius: "sm",
+    size: "sm",
+  }
 
   return (
     <>
+      {signinShow &&
+        <Popup outsideClick={() => setSigninShow(false)}>
+          <Signin onSubmit={signupHandler} inputStyle={inputStyle} />
+        </Popup>}
+      {signupShow &&
+        <Popup outsideClick={() => setSignupShow(false)}>
+          <Signup onSubmit={signupHandler} inputStyle={inputStyle} />
+        </Popup>
+      }
+      <div style={{ display: "flex", flexDirection: "row-reverse", padding: "5px" }}>
+        <button
+          style={
+            {
+              margin: "2px",
+              backgroundColor: "#fff",
+              color: "#387aff",
+              borderRadius: "5px",
+              border: "1px solid #387aff"
+            }}
+          onClick={() => setSignupShow(true)}
+        >SignUp
+        </button>
+        <button
+          style={
+            {
+              margin: "2px",
+              backgroundColor: "#387aff",
+              color: "#fff",
+              borderRadius: "5px",
+              border: "1px solid #387aff"
+            }}
+          onClick={() => setSigninShow(true)}
+        >SignIn
+        </button>
+      </div>
       <div style={
         {
           display: "flex",
