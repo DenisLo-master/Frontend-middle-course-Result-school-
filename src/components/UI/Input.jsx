@@ -68,7 +68,7 @@ export default function Input(props) {
         <div style={direction}>
             <span style={styleLabel}>
                 {props.label}
-                {props.required && <span style={styleRequired}>*</span>}
+                {props.required && props.type !== "radio" && <span style={styleRequired}>*</span>}
             </span>
             {props.description && <p style={styleDescription}>{props.description}</p>}
             <div style={{
@@ -84,6 +84,7 @@ export default function Input(props) {
                     onChange={handleChange}
                     type={props.type}
                     style={styleInput}
+                    required={props.required}
                 />
                 {props.name === "nickname" &&
                     <IconAt style={
