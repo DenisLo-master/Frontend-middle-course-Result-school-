@@ -12,6 +12,11 @@ export function useViewportSize() {
         setWidth(event.target.innerWidth)
     }
 
+    useEffect(() => {
+        setWidth(window.innerWidth)
+        setHeight(window.innerHeight)
+    }, [])
+
 
 
     return { height, width }
