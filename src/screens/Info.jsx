@@ -26,6 +26,8 @@ function Info() {
             return <EpisodeUI itemInfo={currentItem} />
         } else if (category === "characters") {
             return <CharactersUI itemInfo={currentItem} />
+        } else {
+            navigate('/')
         }
     }
 
