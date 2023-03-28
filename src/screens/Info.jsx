@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import CharactersUI from '../containers/CharactersUI'
 import EpisodeUI from '../containers/EpisodeUI'
 import LocationUI from '../containers/LocationUI'

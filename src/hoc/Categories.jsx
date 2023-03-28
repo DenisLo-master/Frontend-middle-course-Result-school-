@@ -1,7 +1,6 @@
 import React from 'react'
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import NavList from '../components/NavList'
-import TopBar from './TopBar'
 
 function Categories() {
     const location = useLocation()
