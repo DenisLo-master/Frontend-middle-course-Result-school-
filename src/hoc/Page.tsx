@@ -25,7 +25,7 @@ export function Page() {
         return 1
     }
 
-    const getDataList = (category: string, sort: string) => {
+    const getDataList = (category: string,) => {
         let data = null
         if (category === "locations") {
             data = locationData()
@@ -35,9 +35,14 @@ export function Page() {
             data = charactersData()
         } else {
             navigate("/")
-            return
         }
+        data && localStorage.setItem('data', JSON.stringify(data));
+        return data
+    }
 
+    const getNavList = (category: string, sort: string) => {
+        const data = getDataList(category)
+        if (data === null) return
         const sortDirection = getSortDirection(sort);
 
 
@@ -55,7 +60,7 @@ export function Page() {
             }
             return 0;
         })
-        localStorage.setItem('data', JSON.stringify(data));
+
         const navList = (
             <NavList
                 listItems={filteredData}
@@ -72,7 +77,7 @@ export function Page() {
         let sort = searchParams.get("sort")
         sort = sort ? sort : "ASC"
         if (sort === "ASC" || sort === "DESC") {
-            category && getDataList(category, sort)
+            category && getNavList(category, sort)
         }
     }, [searchParams, inputFilter, category])
 
