@@ -29,11 +29,11 @@ export function Info() {
 
     function item(): JSX.Element | void {
         if (category === "locations") {
-            return <LocationUI itemInfo={currentItem as LocationData} />
+            return <LocationUI key={currentItem && currentItem.id} itemInfo={currentItem as LocationData} />
         } else if (category === "episodes") {
-            return <EpisodeUI itemInfo={currentItem as EpisodesData} />
+            return <EpisodeUI key={currentItem && currentItem.id} itemInfo={currentItem as EpisodesData} />
         } else if (category === "characters") {
-            return <CharactersUI itemInfo={currentItem as CharacterData} />
+            return <CharactersUI key={currentItem && currentItem.id} itemInfo={currentItem as CharacterData} />
         } else {
             navigate('/')
             return
