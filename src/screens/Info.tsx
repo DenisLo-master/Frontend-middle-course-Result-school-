@@ -12,13 +12,16 @@ export function Info() {
     const [itemInfo, setItemInfo] = useState<JSX.Element>()
     const { category, id } = useParams()
 
-    const dataStorage = localStorage.getItem('data')
+    const dataStorage = category && localStorage.getItem(category)
     const data: (LocationData | EpisodesData | CharacterData)[] = dataStorage && JSON.parse(dataStorage)
     const currentItem = data && data.filter(item => id && item.id === +id)[0]
 
     useEffect(() => {
         if (!currentItem) {
             navigate(`/${category}`)
+        } else {
+            const result = item()
+            result && setItemInfo(result)
         }
     }, [id])
 
@@ -40,7 +43,7 @@ export function Info() {
     useEffect(() => {
         const result = item()
         result && setItemInfo(result)
-    }, [category, id])
+    }, [category])
 
     return (
         <div className='flex flex-1 flex-col h-full bg-green-100'

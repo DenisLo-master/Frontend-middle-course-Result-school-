@@ -36,7 +36,7 @@ export function Page() {
         } else {
             navigate("/")
         }
-        data && localStorage.setItem('data', JSON.stringify(data));
+        data && localStorage.setItem(category, JSON.stringify(data));
         return data
     }
 
@@ -75,7 +75,6 @@ export function Page() {
 
     useEffect(() => {
         let sort = searchParams.get("sort")
-        sort = sort ? sort : "ASC"
         if (sort === "ASC" || sort === "DESC") {
             category && getNavList(category, sort)
         }
