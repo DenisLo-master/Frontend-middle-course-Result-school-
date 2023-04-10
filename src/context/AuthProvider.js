@@ -10,23 +10,21 @@ export default function AuthProvider({ children }) {
     const [auth, setAuth] = useState(() => { return { user: localStorage.getItem('user') } })
 
     const signIn = (newUser, callback) => {
-        setAuth((prev) => {
-            return {
-                ...prev,
-                user: newUser
-            }
-        })
+        setAuth((prev) => ({
+            ...prev,
+            user: newUser
+        }
+        ))
         localStorage.setItem('user', newUser)
         callback()
     }
 
     const signUp = (newUser, callback) => {
-        setAuth((prev) => {
-            return {
-                ...prev,
-                user: newUser
-            }
-        })
+        setAuth((prev) => ({
+            ...prev,
+            user: newUser
+        }
+        ))
         localStorage.setItem('user', newUser)
         callback()
     }

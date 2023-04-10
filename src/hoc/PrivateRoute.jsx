@@ -6,7 +6,6 @@ export default function PrivateRoute({ children }) {
     const { auth } = useAuth()
     const location = useLocation()
 
-    console.log(location)
 
     if (!auth?.user) {
         return <Navigate to="/auth" state={{ ...location, from: location.pathname, search: location.search }} replace />

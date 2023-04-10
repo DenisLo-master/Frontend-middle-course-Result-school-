@@ -15,6 +15,7 @@ function CharactersUI({ itemInfo = null }) {
                     </div>
                     <img
                         className='p-1 border-l-4 border-sky-500 object-contain'
+                        alt={itemInfo.name}
                         src={itemInfo.image}
                     />
                 </div> :

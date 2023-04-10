@@ -9,7 +9,7 @@ function Page() {
     const { category } = useParams()
     const location = useLocation()
     const navigate = useNavigate()
-    const [searchParams, setSearchParams] = useSearchParams()
+    const [searchParams] = useSearchParams()
     const [inputFilter, setInputFilter] = useState("")
 
     const marginTop = location.state.countCategory * 60
@@ -36,7 +36,13 @@ function Page() {
             navigate("/")
             return
         }
+        data && localStorage.setItem(category, JSON.stringify(data));
+        return data
+    }
 
+    const getNavList = (category, sort) => {
+        const data = getDataList(category)
+        if (data === null) return
         const sortDirection = getSortDirection(sort);
 
         const filteredData = data.filter(item => item.name.includes(inputFilter))
@@ -49,7 +55,6 @@ function Page() {
             }
             return 0;
         })
-        localStorage.setItem('data', JSON.stringify(data));
         const navList = (
             <NavList
                 listItems={filteredData}
@@ -63,9 +68,9 @@ function Page() {
 
 
     useEffect(() => {
-        const sort = searchParams.get("sort")
+        let sort = searchParams.get("sort")
         if (sort === "ASC" || sort === "DESC") {
-            getDataList(category, sort)
+            category && getNavList(category, sort)
         }
     }, [searchParams, inputFilter, category])
 

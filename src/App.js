@@ -29,7 +29,7 @@ function App() {
     <>
       {signinShow &&
         <Popup outsideClick={() => setSigninShow(false)}>
-          <Signin onSubmit={signupHandler} inputStyle={inputStyle} />
+          <Signin onSubmit={signinHandler} inputStyle={inputStyle} />
         </Popup>}
       {signupShow &&
         <Popup outsideClick={() => setSignupShow(false)}>

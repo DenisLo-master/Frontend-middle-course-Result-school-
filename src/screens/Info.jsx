@@ -7,34 +7,40 @@ import LocationUI from '../containers/LocationUI'
 function Info() {
     const navigate = useNavigate()
     const [itemInfo, setItemInfo] = useState("")
-
-    const data = JSON.parse(localStorage.getItem('data'))
     const { category, id } = useParams()
-    const currentItem = data.filter(item => item.id == id)[0]
 
-    useEffect(() => {
-        if (!currentItem) {
-            navigate(`/${category}`)
-        }
-    }, [id])
+    const dataStorage = category && localStorage.getItem(category)
+    const data = dataStorage && JSON.parse(dataStorage)
+    const currentItem = data && data.filter(item => item.id === +id)[0]
+
 
 
     function item() {
         if (category === "locations") {
-            return <LocationUI itemInfo={currentItem} />
+            return <LocationUI key={currentItem && currentItem.id} itemInfo={currentItem} />
         } else if (category === "episode") {
-            return <EpisodeUI itemInfo={currentItem} />
+            return <EpisodeUI key={currentItem && currentItem.id} itemInfo={currentItem} />
         } else if (category === "characters") {
-            return <CharactersUI itemInfo={currentItem} />
+            return <CharactersUI key={currentItem && currentItem.id} itemInfo={currentItem} />
         } else {
             navigate('/')
         }
     }
 
     useEffect(() => {
+        if (!currentItem) {
+            navigate(`/${category}`)
+        } else {
+            const result = item()
+            result && setItemInfo(result)
+        }
+    }, [id])
+
+
+    useEffect(() => {
         const result = item()
-        setItemInfo(result)
-    }, [category, id])
+        result && setItemInfo(result)
+    }, [category])
 
     return (
         <div className='flex flex-1 flex-col h-full bg-green-100'
