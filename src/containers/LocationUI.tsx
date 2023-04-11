@@ -1,11 +1,11 @@
-import React, { FC } from 'react'
+import React, { ComponentType, FC } from 'react'
 import { LocationData } from '../data'
 
 interface ItemsInfo {
     itemInfo: LocationData
 }
 
-export const LocationUI: FC<ItemsInfo> = ({ itemInfo }): JSX.Element => {
+export const LocationUI: ComponentType<ItemsInfo> = ({ itemInfo }): JSX.Element => {
     return (
         <div className='flex grow h-screen w-full  justify-center items-center'>
             {itemInfo ?

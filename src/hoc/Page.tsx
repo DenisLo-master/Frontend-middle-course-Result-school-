@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState, useTransition } from 'react'
 import { Outlet, useLocation, useNavigate, useParams, useSearchParams, } from 'react-router-dom';
 import NavList from '../components/NavList';
 import SortBtn from '../components/SortBtn';
 import { CharacterData, EpisodesData, LocationData, charactersData, episodeData, locationData } from '../data/index';
+import { SpinnerCircles } from '../components/UI/SpinnerCircles';
 
 
 export function Page() {
+    const [isPending, startTransition] = useTransition()
+
     const { category } = useParams()
     const location = useLocation()
     const navigate = useNavigate()
@@ -14,7 +17,7 @@ export function Page() {
 
     const marginTop = location.state.countCategory * 60
     const [navList, setNavList] = useState<JSX.Element | null>(null)
-    const activeStyle = { active: 'text-orange-700', disActive: 'text-black' }
+    const activeStyle = { active: 'text-orange-400', disActive: 'text-black' }
 
     const getSortDirection = (sortParam: string) => {
         if (sortParam === "ASC") {
@@ -74,28 +77,41 @@ export function Page() {
 
 
     useEffect(() => {
-        let sort = searchParams.get("sort")
+        const sortParam = searchParams.get("sort")
+        const sort = sortParam ? sortParam : "ASC"
         if (sort === "ASC" || sort === "DESC") {
-            category && getNavList(category, sort)
+            category && startTransition(() => {
+                getNavList(category, sort)
+            })
         }
     }, [searchParams, inputFilter, category])
 
     return (
         <>
-            <div className='relative flex flex-col bg-sky-100 h-screen w-1/4'>
+            <div className='h-screen flex items-stretch pt-14  bg-sky-100 h-full w-1/4'>
                 <div
                     style={{ marginTop }}
-                    className='flex grow relative border-t-4 border-sky-500'
+                    className='border-box  border-t-4 border-sky-500 w-full'
                 >
                     {category &&
-                        <div className='flex grow flex-col items-start pl-4 pt-4'>
-                            <div className='flex items-center gap-3'>
+                        <div className='flex flex-initial relative flex-col h-full relative items-start  pt-4 '>
+                            <div className='flex items-center pl-4 pr-10'>
                                 <SortBtn name="sort" />
-                                <input value={inputFilter} placeholder=" search" type="text" onChange={(e) => setInputFilter(e.target.value)} />
+                                <input
+                                    value={inputFilter} placeholder=" search" type="text"
+                                    onChange={(e) => setInputFilter(e.target.value)}
+                                />
                             </div>
-                            <div className='relative overflow-y-scroll w-full'>
-                                {navList}
+                            <div className='flex flex-nowrap overflow-auto relative h-full w-full pt-4'>
+                                {isPending &&
+                                    <div className='flex absolute w-full justify-center self-center'>
+                                        <SpinnerCircles />
+                                    </div>}
+                                <Suspense>
+                                    {navList}
+                                </Suspense>
                             </div>
+
                         </div>
                     }
                 </div>

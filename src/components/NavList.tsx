@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import { NavLink, useLocation, useSearchParams } from 'react-router-dom'
 import { CharacterData, EpisodesData, LocationData } from '../data'
+import { Box, List, ListItemButton, ListItemText } from '@mui/material'
 
 interface ActiveStyle {
     active: string
@@ -34,18 +35,44 @@ const NavList: FC<NavListData> = ({ listItems, activeStyle, keyName = null, cate
         return { id, name }
     }
 
+    const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+    const handleListItemClick = (
+        event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+        index: number,
+    ) => {
+        setSelectedIndex(index);
+    };
+
+
+
     const navList = listItems.map((item, index) => {
         const { id, name } = getProps(item, keyName)
         const linkTo = category ? `/${category}/${id}` : `/${name}`
         return (
-            <li key={"li" + index} className='my-4'>
+            <li key={"li" + index} className=''>
                 <NavLink
                     key={"NavLink" + index}
                     to={{ pathname: linkTo, search: `?sort=${curSort}` }}
                     state={{ from: location }}
-                    className={activeClass}
                 >
-                    {name}
+                    <ListItemButton
+                        selected={selectedIndex === index}
+                        onClick={(event) => handleListItemClick(event, index)}
+                    >
+                        <ListItemText
+                            primary={
+                                <span className={
+                                    `${selectedIndex === index && 'text-orange-400'}
+                                    ${category ? 'text-md' : 'text-2xl'}
+                                     block whitespace-nowrap overflow-clip pr-4 `
+                                }
+                                >
+                                    {name}
+                                </span>
+                            } />
+                    </ListItemButton>
+
                 </NavLink>
             </li >
         )
@@ -54,9 +81,11 @@ const NavList: FC<NavListData> = ({ listItems, activeStyle, keyName = null, cate
 
 
     return (
-        <ul >
-            {navList}
-        </ul>
+        <Box sx={{ width: '100%', color: "gray" }}>
+            <List component="nav" aria-label="main mailbox folders">
+                {navList}
+            </List>
+        </Box>
     )
 }
 

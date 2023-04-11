@@ -8,7 +8,10 @@ import { TopBar } from './hoc/TopBar'
 import { Home } from './screens/Home'
 import { Info } from './screens/Info'
 
-function AppLesson6() {
+function App() {
+
+
+
   return (
     <AuthProvider>
       <BrowserRouter>
@@ -26,8 +29,9 @@ function AppLesson6() {
           </Route>
         </Routes>
       </BrowserRouter>
+
     </AuthProvider>
   )
 }
 
-export default AppLesson6
+export default App

@@ -10,14 +10,12 @@ function Categories() {
     const activeStyle = { active: 'text-orange-500', disActive: 'text-black' }
 
     return (
-        <>
-            <div className='flex pt-10'>
-                <Outlet />
-                <ul className='fixed text-3xl pl-4 pr-4 pt-3'>
-                    <NavList listItems={categoryList} activeStyle={activeStyle} />
-                </ul>
+        <div className='flex items-stretch h-screen w-full'>
+            <Outlet />
+            <div className='fixed w-1/4 top-0 text-3xl pt-14'>
+                <NavList listItems={categoryList} activeStyle={activeStyle} />
             </div>
-        </>
+        </div>
     )
 }
 
