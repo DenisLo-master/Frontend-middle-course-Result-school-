@@ -1,29 +1,44 @@
 {
-  "name": "webpack-course",
+  "name": "frontend-middle-course",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "private": true,
   "scripts": {
-    "start": "npx webpack serve --config webpack.config.dev.js",
-    "build": "npx webpack --config webpack.config.prod.js",
-    "build:dev": "npx webpack --config webpack.config.dev.js"
+    "start-webpack": "npx webpack serve --config webpack.config.dev.js",
+    "build-webpack": "npx webpack --config webpack.config.prod.js",
+    "build-webpack:dev": "npx webpack --config webpack.config.dev.js",
+    "dev": "npx nodemon",
+    "build": "rimraf ./build && npx tsc",
+    "start": "npm run build && node build/index.js"
   },
   "author": "DenisLo",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^18.14.2",
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.3",
     "css-minimizer-webpack-plugin": "^4.2.2",
+    "eslint": "^8.34.0",
+    "eslint-config-standard-with-typescript": "^34.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-webpack-plugin": "^4.0.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.7.2",
+    "nodemon": "^2.0.20",
     "postcss": "^8.4.21",
     "postcss-loader": "^7.0.2",
     "postcss-preset-env": "^8.0.1",
+    "rimraf": "^4.1.2",
     "sass": "^1.58.0",
     "sass-loader": "^13.2.0",
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.3.6",
     "ts-loader": "^9.4.2",
+    "ts-node": "^10.9.1",
     "typescript": "^4.9.5",
     "webpack": "^5.75.0",
     "webpack-bundle-analyzer": "^4.7.0",
@@ -32,9 +47,6 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "@types/react": "^18.0.27",
-    "@types/react-dom": "^18.0.10",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "axios": "^1.3.4"
   }
 }
