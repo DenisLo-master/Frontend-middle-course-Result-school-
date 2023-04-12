@@ -1,7 +1,7 @@
 import React, { FC, PropsWithChildren } from 'react'
 
 interface PopupProps {
-    outsideClick: React.MouseEventHandler<HTMLDivElement>
+    outsideClick?: React.MouseEventHandler<HTMLDivElement>
 }
 export const Popup: FC<PropsWithChildren<PopupProps>> = ({ children, outsideClick }) => {
     return (
@@ -19,7 +19,7 @@ export const Popup: FC<PropsWithChildren<PopupProps>> = ({ children, outsideClic
                 onClick={outsideClick}
                 style={{
                     position: "fixed",
-                    backgroundColor: "gray",
+                    backgroundColor: "black",
                     opacity: 0.4,
                     height: "100%",
                     width: "100%",

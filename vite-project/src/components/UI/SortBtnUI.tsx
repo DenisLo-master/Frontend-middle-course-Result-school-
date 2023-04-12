@@ -1,11 +1,15 @@
 import React from 'react'
 import { SortAscendingLetters, SortDescendingLetters } from "tabler-icons-react"
 
-
-export default function SortBtnUI({ name = "button", sort = "ASC", onClick }) {
+interface SortBtnUIProps {
+    name: string
+    sort: string
+    onClick: () => void
+}
+export default function SortBtnUI({ name = "button", sort = "ASC", onClick }: SortBtnUIProps) {
     return (
         <button
-            className='border-0 bg-transparent '
+            className='border-0 bg-transparent pr-4 '
             onClick={onClick}>
             <div className='flex flex-row justify-center'>
                 <span className='text-3xl text-sky-500'>{name} </span>

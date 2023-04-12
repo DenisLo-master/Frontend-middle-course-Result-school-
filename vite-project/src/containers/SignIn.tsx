@@ -2,10 +2,12 @@ import React, { FC } from 'react'
 import { FormInputs, InputState } from '../components/UI/FormInputs'
 import { Input } from '../components/UI/Input'
 import { InputStyle } from '../hoc/TopBar';
+import { Button } from '@mui/material';
 
 
 interface SignInProps {
     onSubmit: (state: SignInInputs) => void;
+    onCancel?: () => void;
     inputStyle: InputStyle
 }
 
@@ -14,7 +16,7 @@ export interface SignInInputs {
     password: string
 }
 
-export const SignIn: FC<SignInProps> = ({ onSubmit, inputStyle }) => {
+export const SignIn: FC<SignInProps> = ({ onSubmit, inputStyle, onCancel }) => {
 
     const onSubmitForm = (state: InputState) => {
         const signUpInputs = state as SignInInputs
@@ -22,17 +24,10 @@ export const SignIn: FC<SignInProps> = ({ onSubmit, inputStyle }) => {
     }
 
     return (
-        <div style={{
-            backgroundColor: "white",
-            padding: "10px",
-            borderRadius: "15px",
-            width: "50%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            boxShadow: "5px 5px 5px gray"
-        }}>
+        <div
+            className='flex w-1/2 flex-col items-center justify-center
+             p-2 bg-sky-200 rounded-xl shadow-md'
+        >
             <h3>Вход</h3>
             <FormInputs onSubmitForm={onSubmitForm} >
                 <Input
@@ -47,18 +42,24 @@ export const SignIn: FC<SignInProps> = ({ onSubmit, inputStyle }) => {
                     label="Пароль"
                     {...inputStyle}
                 />
-                <button
-                    style={{
-                        margin: "2px",
-                        backgroundColor: "#387aff",
-                        color: "#fff",
-                        borderRadius: "5px",
-                        border: "1px solid #387aff"
-                    }}
-                    type='submit'
-                >
-                    Войти
-                </button>
+                <div className='flex flex-row py-2'>
+                    <div className='pr-4' >
+                        <Button
+                            type='submit'
+                            variant="contained"
+                            color="info"
+                        >
+                            SignIn
+                        </Button>
+                    </div>
+                    <Button
+                        variant="outlined"
+                        color="info"
+                        onClick={onCancel}
+                    >
+                        Cancel
+                    </Button>
+                </div>
             </FormInputs>
         </div>
     )
