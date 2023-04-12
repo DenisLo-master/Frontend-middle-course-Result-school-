@@ -2,22 +2,22 @@ import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom';
 import SortBtnUI from './UI/SortBtnUI';
 
-
-export default function SortBtn({ name }) {
-    const [sortState, setSortState] = useState()
+interface SortBtnProps {
+    name: string
+}
+export default function SortBtn({ name }: SortBtnProps) {
+    const [sortState, setSortState] = useState<boolean>(true)
     const [searchParams, setSearchParams] = useSearchParams()
 
     function toggle() {
         setSortState((prev) => !prev)
     }
 
-    function sortStateToSort(sortState) {
+    function sortStateToSort(sortState: boolean) {
         if (sortState) {
             return "ASC"
-        } else if (sortState === false) {
-            return "DESC"
         } else {
-            return null
+            return "DESC"
         }
     }
 

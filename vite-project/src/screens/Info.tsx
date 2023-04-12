@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, lazy, useEffect, useState, useTransition } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { CharactersUI } from '../containers/CharactersUI'
-import { EpisodeUI } from '../containers/EpisodeUI'
-import { LocationUI } from '../containers/LocationUI'
 import { CharacterData, EpisodesData, LocationData } from '../data'
+import { SkeletonUI } from '../components/UI/SkeletonUI'
 
-
+const LocationUI = lazy(() => import('../containers/LocationUI')
+    .then(module => ({ default: module.LocationUI })))
+const EpisodeUI = lazy(() => import('../containers/EpisodeUI')
+    .then(module => ({ default: module.EpisodeUI })))
+const CharactersUI = lazy(() => import('../containers/CharactersUI')
+    .then(module => ({ default: module.CharactersUI })))
 
 export function Info() {
     const navigate = useNavigate()
@@ -20,20 +23,23 @@ export function Info() {
         if (!currentItem) {
             navigate(`/${category}`)
         } else {
-            const result = item()
-            result && setItemInfo(result)
+
+            item().then((res) => {
+                res && setItemInfo(res)
+            })
         }
     }, [id])
 
-
-
-    function item(): JSX.Element | void {
+    async function item(): Promise<JSX.Element | void> {
         if (category === "locations") {
             return <LocationUI key={currentItem && currentItem.id} itemInfo={currentItem as LocationData} />
+
         } else if (category === "episodes") {
             return <EpisodeUI key={currentItem && currentItem.id} itemInfo={currentItem as EpisodesData} />
+
         } else if (category === "characters") {
             return <CharactersUI key={currentItem && currentItem.id} itemInfo={currentItem as CharacterData} />
+
         } else {
             navigate('/')
             return
@@ -41,14 +47,26 @@ export function Info() {
     }
 
     useEffect(() => {
-        const result = item()
-        result && setItemInfo(result)
+        // startTransition(() => {
+        //     item().then((res) => {
+        //         res && setItemInfo(res)
+        //     })
+        // })
+        item().then((res) => {
+            res && setItemInfo(res)
+        })
     }, [category])
 
+    const skeleton = (<div className='absolute w-3/4 px-20'>
+        <SkeletonUI countRows={8} />
+    </div>)
+
     return (
-        <div className='flex flex-1 flex-col h-full bg-green-100'
+        <div className='flex h-screen w-3/4 bg-green-100 justify-center items-start pt-14'
         >
-            {itemInfo}
+            <Suspense fallback={skeleton}>
+                {itemInfo}
+            </Suspense>
         </div>
     )
 }
