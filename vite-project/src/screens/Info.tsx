@@ -1,7 +1,8 @@
-import React, { Suspense, lazy, useEffect, useState, useTransition } from 'react'
+import React, { Suspense, lazy, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { CharacterData, EpisodesData, LocationData } from '../data'
 import { SkeletonUI } from '../components/UI/SkeletonUI'
+import ErrorBoundary from '../hoc/ErrorBoundary'
 
 const LocationUI = lazy(() => import('../containers/LocationUI')
     .then(module => ({ default: module.LocationUI })))
@@ -47,11 +48,7 @@ export function Info() {
     }
 
     useEffect(() => {
-        // startTransition(() => {
-        //     item().then((res) => {
-        //         res && setItemInfo(res)
-        //     })
-        // })
+
         item().then((res) => {
             res && setItemInfo(res)
         })
@@ -64,9 +61,13 @@ export function Info() {
     return (
         <div className='flex h-screen w-3/4 bg-green-100 justify-center items-start pt-14'
         >
-            <Suspense fallback={skeleton}>
-                {itemInfo}
-            </Suspense>
+            <ErrorBoundary>
+                <div className='flex  h-full justify-center pt-48 flex-nowrap overflow-auto z-10'>
+                    <Suspense fallback={skeleton}>
+                        {itemInfo}
+                    </Suspense>
+                </div>
+            </ErrorBoundary>
         </div>
     )
 }

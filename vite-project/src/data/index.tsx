@@ -1,7 +1,5 @@
 import React from 'react'
-import episode from "./JSON/episode.json"
-import location from "./JSON/location.json"
-import characters from "./JSON/characters.json"
+
 
 export interface LocationData {
     "id": number
@@ -9,6 +7,8 @@ export interface LocationData {
     "type": string
     "dimension": string
     "created": string
+    "url": string
+    "residents": string
 }
 
 export interface EpisodesData {
@@ -16,9 +16,15 @@ export interface EpisodesData {
     "name": string
     "air_date": string
     "episode": string
+    "characters": string[]
+    "url": string
     "created": string
 }
 
+interface Detail {
+    "name": string
+    "url": string
+}
 export interface CharacterData {
     "id": number
     "name": string
@@ -26,18 +32,13 @@ export interface CharacterData {
     "species": string
     "type": string
     "gender": string
+    "origin": Detail
+    "location": Detail
     "image": string
+    "episode": string[]
+    "url": string
     "created": string
 }
 
-export function locationData(): LocationData[] {
-    return location
-}
 
-export function episodeData(): EpisodesData[] {
-    return episode
-}
-
-export function charactersData(): CharacterData[] {
-    return characters
-}
+export type DataResponse = (CharacterData | EpisodesData | LocationData)[]
