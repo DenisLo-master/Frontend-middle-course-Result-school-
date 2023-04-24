@@ -25,7 +25,6 @@ function App() {
                 <Route path=":category/:id" element={<Info />} />
               </Route>
             </Route>
-            {/* <Route path="/" element={<Home />} /> */}
           </Route>
         </Routes>
       </BrowserRouter>

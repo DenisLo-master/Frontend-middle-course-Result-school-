@@ -2,13 +2,27 @@ import React, { Suspense, useEffect, useState, useTransition } from 'react'
 import { Outlet, useLocation, useNavigate, useParams, useSearchParams, } from 'react-router-dom';
 import NavList from '../components/NavList';
 import SortBtn from '../components/SortBtn';
-import { CharacterData, EpisodesData, LocationData, charactersData, episodeData, locationData } from '../data/index';
+import { DataResponse } from '../data/index';
 import { TextField } from '@mui/material';
 import { SkeletonUI } from '../components/UI/SkeletonUI';
+import ErrorBoundary from './ErrorBoundary';
+import { useFetch } from '../components/useFetch';
+import { CATEGORY_LIST } from './Categories';
+
+
+
 
 
 export function CategoryDetail() {
     const [isPending, startTransition] = useTransition()
+    const [pageNumber, setPageNumber] = useState<number>(1)
+
+    const {
+        data,
+        isLoading,
+        error,
+        fetch
+    } = useFetch();
 
     const { category } = useParams()
     const location = useLocation()
@@ -28,32 +42,28 @@ export function CategoryDetail() {
         return 1
     }
 
-    const getDataList = (category: string,) => {
-        let data = null
-        if (category === "locations") {
-            data = locationData()
-        } else if (category === "episodes") {
-            data = episodeData()
-        } else if (category === "characters") {
-            data = charactersData()
-        } else {
+    const getDataList = async (category: string) => {
+        if (!CATEGORY_LIST.includes(category)) {
             navigate("/")
+            return
         }
-        data && localStorage.setItem(category, JSON.stringify(data));
-        return data
+        const dataResponse = await fetch({ category, page: pageNumber })
+        dataResponse.length && localStorage.setItem(category, JSON.stringify(dataResponse));
+        return dataResponse
     }
 
-    const getNavList = (category: string, sort: string) => {
-        const data = getDataList(category)
-        if (data === null) return
+    const getNavList = async (category: string, sort: string) => {
+        const dataResponse = await getDataList(category)
+
+        if (!dataResponse) return
         const sortDirection = getSortDirection(sort);
 
 
-        function getFilteredData<T extends (CharacterData | EpisodesData | LocationData)[]>(data: T) {
+        function getFilteredData<T extends DataResponse>(data: T) {
             return data.filter((item) => item.name.includes(inputFilter))
         }
 
-        const filteredData = getFilteredData(data)
+        const filteredData = getFilteredData(dataResponse)
         filteredData.sort(function (a, b) {
             if (a.name > b.name) {
                 return 1 * sortDirection
@@ -69,11 +79,15 @@ export function CategoryDetail() {
                 listItems={filteredData}
                 keyName="name"
                 category={category}
+                setPageNumber={() => { setPageNumber(prevState => prevState + 1) }}
             />)
         setNavList(navList)
+        return
     }
 
-
+    useEffect(() => {
+        setPageNumber(1)
+    }, [category])
 
     useEffect(() => {
         const sortParam = searchParams.get("sort")
@@ -83,7 +97,7 @@ export function CategoryDetail() {
                 getNavList(category, sort)
             })
         }
-    }, [searchParams, inputFilter, category])
+    }, [searchParams, inputFilter, category, pageNumber])
 
     return (
         <>
@@ -112,16 +126,20 @@ export function CategoryDetail() {
                                     <div className=' absolute w-full px-4'>
                                         <SkeletonUI countRows={10} paddingTop='1rem' />
                                     </div>}
-                                <Suspense>
-                                    {navList}
-                                </Suspense>
+                                <ErrorBoundary>
+                                    <Suspense>
+                                        {navList}
+                                    </Suspense>
+                                </ErrorBoundary>
                             </div>
 
                         </div>
                     }
                 </div>
-            </div>
-            <Outlet />
+            </div >
+            <ErrorBoundary>
+                <Outlet />
+            </ErrorBoundary>
         </>
     )
 }
