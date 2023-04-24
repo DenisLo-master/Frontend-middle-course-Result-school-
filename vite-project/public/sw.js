@@ -42,7 +42,7 @@ async function cacheFirst(request) {
   const cached = await caches.match(request)
   try {
     return cached ?? await fetch(request).then((response) => {
-      networkFirst(request)
+      return networkFirst(request)
     })
   } catch {
     return networkFirst(request)
